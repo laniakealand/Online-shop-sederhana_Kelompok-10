@@ -45,6 +45,7 @@ if pilihan_1 == "1":
     print("4. Keluar")
 
 #menampilkan pilihan lagu
+#ROCK
     pilihan_2 = input("Pilih genre lagu (1-4): ")
     if pilihan_2 == "1":
         print("Genre musik rock adalah suatu genre musik populer yang mulai tumbuh sejak era 50an. Musik rock terbentuk karena pengaruh musik R&B dan country di era 40an.")
