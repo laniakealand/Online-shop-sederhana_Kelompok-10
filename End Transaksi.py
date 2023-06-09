@@ -40,18 +40,18 @@ def beliBarang(no):
                 "batas_waktu":datetime.datetime.now()+timedelta(minutes=batas_pembayaran_transaksi),
                 "status":"Belum Dibayar"
                 }
-                # pelanggan[index]['saldo'] -= b['harga']
-                print("==============================")
-                print("Anda Sudah Membeli : ")
-                print("Nama : ",b['nama'])
-                print("Dengan Harga : Rp.",b['harga'])
-                print("Silahkan Bayar Tagihan Sebelum ",trans['batas_waktu'])
-                print("==============================")
-                pelanggan[index]['transaksi'].append(trans)
-        else :
-            return to HomePage
-        print("")
-        print("")
+# pelanggan[index]['saldo'] -= b['harga']
+        print("==============================")
+        print("Anda Sudah Membeli : ")
+        print("Nama : ",b['nama'])
+        print("Dengan Harga : Rp.",b['harga'])
+        print("Silahkan Bayar Tagihan Sebelum ",trans['batas_waktu'])
+        print("==============================")
+        pelanggan[index]['transaksi'].append(trans)
+    else :
+    return to main()
+print("")
+print("")
  
 def tampilkanTransaksi():
     no = 1
