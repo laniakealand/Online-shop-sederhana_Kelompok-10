@@ -240,7 +240,7 @@ if pilihan_1 == "1":
         if pilihan_3.lower() == "ya":
             menu_genre()
         else:
-            print("Terimakasih telah mengunjungi informasi genre lagu.")
+            print("Terimakasih telah mengunjungi informasi genre lagu.")  
 
 elif pilihan_1 == "2":
     def menu_genre():
@@ -308,5 +308,3 @@ elif pilihan_1 == "2":
             menu_genre()
         else:
             print("Terimakasih telah mengunjungi informasi genre lagu.")
-
-#kelompok10
