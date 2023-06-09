@@ -1,67 +1,62 @@
+import pandas as pd
 import csv
 import os
 
-# Function to display the available products
+# Fungsi Display Item (Lagu)
 def display_products(products):
-    print("Available Products:")
+    print("==Produk Tersedia==:")
     print("-------------------")
-    for product in products:
-        print(f"{product['name']}: ${product['price']}")
+    for _, product in products.iterrows():
+        print(f"{product['name']}: Rp{product['price']}")
 
-# Function to add products to the shopping cart
+# Fungsi Menambahkan Lagu ke Dalam My List
 def add_to_cart(products, cart):
     display_products(products)
-    product_name = input("Enter the name of the product: ")
-    quantity = int(input("Enter the quantity: "))
+    product_name = input("Masukkan Item: ")
+    quantity = int(input("Masukan Jumlah Item: "))
 
-    # Search for the product in the product list
-    for product in products:
-        if product['name'] == product_name:
-            cart.append({'name': product['name'], 'price': product['price'], 'quantity': quantity})
-            print(f"{quantity} {product_name}(s) added to the cart.")
-            return
+    # Mencari Item (Lagu) Dalam Display
+    product = products[products['name'] == product_name]
+    if not product.empty:
+        cart.append({'name': product['name'].values[0], 'price': product['price'].values[0], 'quantity': quantity})
+        print(f"{quantity} {product_name} dimasukkan dalam My List.")
+    else:
+        print("Lagu Tidak Ditemukan.")
 
-    # If the product is not found
-    print("Product not found.")
-
-# Function to display the shopping cart
+# Fungsi Menampilkan Item di My List
 def display_cart(cart):
     if len(cart) == 0:
-        print("Your shopping cart is empty.")
+        print("List Lagu Anda Kosong.")
     else:
         total = 0
-        print("Shopping Cart:")
+        print("My List:")
         print("--------------")
         for item in cart:
-            print(f"{item['name']}: ${item['price']} x {item['quantity']}")
+            print(f"{item['name']}: Rp{item['price']} x {item['quantity']}")
             total += item['price'] * item['quantity']
-        print(f"Total: ${total}")
+        print(f"Total: Rp{total}")
 
-# Function to remove an item from the shopping cart
+# Fungsi Menghapus Item Dalam My List
 def remove_from_cart(cart):
     display_cart(cart)
-    item_name = input("Enter the name of the item to remove: ")
+    item_name = input("Masukkan Item yang Ingin Dihapus: ")
 
     for item in cart:
         if item['name'] == item_name:
             cart.remove(item)
-            print(f"{item_name} removed from the cart.")
+            print(f"{item_name} dihapus dari My List.")
             return
 
-    print("Item not found in the cart.")
+    print("Lagu Tidak Ditemukan.")
 
-# Function to clear the shopping cart
+# Fungsi Untuk Mengosongkan My List
 def clear_cart(cart):
     cart.clear()
-    print("Your shopping cart has been cleared.")
+    print("My List Anda Dikosongkan.")
 
-# Function to import products from a CSV file
-def import_products_from_csv(laguPop):
-    products = []
-    with open(laguPop, 'r') as file:
-        reader = csv.DictReader(file)
-        for row in reader:
-            products.append(row)
+# Fungsi Import CSV Dengan Pandas
+def import_products_from_csv(file_path):
+    products = pd.read_csv(file_path)
     return products
 
 #clear screen
@@ -70,20 +65,20 @@ def clear_screen():
 
 # Main program
 def main():
-    # Import products from CSV
+    # Import Item pada CSV
     products = import_products_from_csv('laguPop.csv')
 
     cart = []
 
     while True:
         print("\nMenu:")
-        print("1. Add item to cart")
-        print("2. Remove item from cart")
-        print("3. Clear cart")
-        print("4. Display cart")
-        print("5. Exit")
+        print("1. Masukkan Item ke My List")
+        print("2. Hapus Item dari My List")
+        print("3. Kosongkan My List")
+        print("4. Display My List")
+        print("5. Keluar dari Program")
 
-        choice = input("Enter your choice (1-5): ")
+        choice = input("Masukkan Pilihan Anda (1/2/3/4/5): ")
 
         if choice == '1':
             clear_screen()
@@ -99,10 +94,10 @@ def main():
             display_cart(cart)
         elif choice == '5':
             clear_screen()
-            print("Thank you for shopping with us!")
+            print("Terimakasih telah Menggunakan Program MyuList!")
             break
         else:
-            print("Invalid choice. Please try again.")
+            print("Input Tidak Valid. Silakan Coba Lagi.")
 
 # Run the program
 if __name__ == "__main__":
