@@ -18,7 +18,7 @@ if pilihan_awal == "1":
         print("===============================================")
         print("Program ini merupakan program jual beli album lagu secara online")        
         print("Pilihan genre lagu yang ditawarkan pada program ini berupa lagu Rock, Pop dan K-Pop.")
-        #menampilkan info genre lagu
+        #menampilkan info genre lau
         print("Informasi Genre Lagu")
         print("1. Rock")
         print("2. Pop")
