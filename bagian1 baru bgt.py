@@ -1,5 +1,9 @@
+from reportlab.lib.pagesizes import letter
+from reportlab.pdfgen import canvas
 import pandas as pd
-data_lagu = pd.read_csv('data_lagu.txt')
+import csv
+import os
+data_lagu = pd.read_csv('laguRock.csv')
 
 
 def menu_awal():
@@ -13,30 +17,110 @@ def menu_awal():
 
 def Genre_Rock():
         print("Genre musik rock adalah suatu genre musik populer yang mulai tumbuh sejak era 50an. Musik rock terbentuk karena pengaruh musik R&B dan country di era 40an.")
-        print(data_lagu)
-        print("1. Artis")
-        print("2. Judul")
-        print("3. Tahun")
-        print("4. Keluar")
         pass
 
-import pandas as pd
+# Fungsi Display Item (Lagu)
+def display_products(products):
+    print("==Produk Tersedia==:")
+    print("-------------------")
+    for _, product in products.iterrows():
+        print(f"{product['genre']}, {product['name']}, {product['year']}, {product['link']}: Rp{product['price']}")
 
-def artis_rock():
-    pencarian_artis = input("Masukkan artis yang ingin Anda cari: ")
-    # Membaca data dari file txt
-    df = pd.read_csv('data_lagu.txt', delimiter=',')
-    # Menggunakan fitur str.strip() untuk menghilangkan spasi di sekitar nilai kolom
-    df = df.apply(lambda x: x.str.strip() if x.dtype == "object" else x)
-    # Menggunakan fitur str.lower() untuk memastikan pencarian tidak case-sensitive
-    artis_df = df[df['Artis'].str.lower() == pencarian_artis.lower()]
-    if not artis_df.empty:
-        print(artis_df)
+# Fungsi Menambahkan Lagu ke Dalam My List
+def add_to_cart(products, cart):
+    display_products(products)
+    product_name = input("Masukkan Item: ")
+    quantity = int(input("Masukan Jumlah Item: "))
+
+    # Mencari Item (Lagu) Dalam Display
+    product = products[products['name'] == product_name]
+    if not product.empty:
+        cart.append({'genre': product['genre'].values[0], 'name': product['name'].values[0], 'year': product['year'].values[0], 'link': product['link'].values[0], 'price': product['price'].values[0], 'quantity': quantity})
+        print(f"{quantity} {product_name} dimasukkan dalam My List.")
     else:
-        print("Maaf lagu yang Anda cari tidak tersedia.")
+        print("Lagu Tidak Ditemukan.")
 
+# Fungsi Menampilkan Item di My List
+def display_cart(cart):
+    if len(cart) == 0:
+        print("List Lagu Anda Kosong.")
+    else:
+        total = 0
+        print("My List:")
+        print("--------------")
+        for item in cart:
+            print(f"{item['genre']}, {item['name']}, {item['year']}, {item['link']}: Rp{item['price']} x {item['quantity']}")
+            total += item['price'] * item['quantity']
+        print(f"Total: Rp{total}")
 
+# Fungsi Menghapus Item Dalam My List
+def remove_from_cart(cart):
+    display_cart(cart)
+    item_name = input("Masukkan Item yang Ingin Dihapus: ")
 
+    for item in cart:
+        if item['name'] == item_name:
+            cart.remove(item)
+            print(f"{item_name} dihapus dari My List.")
+            return
+
+    print("Lagu Tidak Ditemukan.")
+
+# Fungsi Untuk Mengosongkan My List
+def clear_cart(cart):
+    cart.clear()
+    print("My List Anda Dikosongkan.")
+
+# Fungsi Import CSV Dengan Pandas
+def import_products_from_csv(file_path):
+    products = pd.read_csv(file_path)
+    return products
+
+#clear screen
+def clear_screen():
+    os.system('cls' if os.name == 'nt' else clear)
+
+def pilihan_menu():
+        print("\nMenu:")
+        print("1. Masukkan Item ke My List")
+        print("2. Hapus Item dari My List")
+        print("3. Kosongkan My List")
+        print("4. Display My List")
+        print("5. Keluar dari Program")
+        print("6. Masuk ke menu pembayaran")
+# Main program
+def main():
+    # Import Item pada CSV
+    products = import_products_from_csv('laguRock.csv')
+
+    cart = []
+
+    while True:
+        print("\nMenu:")
+        print("1. Masukkan Item ke My List")
+        print("2. Hapus Item dari My List")
+        print("3. Kosongkan My List")
+        print("4. Display My List")
+        print("5. Keluar dari Program")
+        print("6. Masuk ke menu pembayaran")
+
+        choice = input("Masukkan Pilihan Anda (1/2/3/4/5/6): ")
+
+        if choice == '1':
+            clear_screen()
+            add_to_cart(products, cart)
+        elif choice == '2':
+            clear_screen()
+            remove_from_cart(cart)
+        elif choice == '3':
+            clear_screen()
+            clear_cart(cart)
+        elif choice == '4':
+            clear_screen()
+            display_cart(cart)
+        elif choice == '5':
+            clear_screen()
+            print("Terimakasih telah Menggunakan Program MyuList!")
 
 menu_awal()
 pilihan_awal = input("Masukkan filter yang anda inginkan: ")    
@@ -57,11 +141,5 @@ if pilihan_awal == "1":
 
     if pilihan_genre == "1":
         Genre_Rock()
-        pilihan_filter_rock = input("Masukkan filter yang ingin anda pilih: ")
-
-        if pilihan_filter_rock == "1":
-            artis_rock() 
-
-
-
-
+        print(data_lagu)
+        main()
