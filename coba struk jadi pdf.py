@@ -3,28 +3,13 @@ from reportlab.pdfgen import canvas
 import pandas as pd
 import csv
 import os
-data_lagu = pd.read_csv('laguRock.csv')
-
-
-def menu_awal():
-    print("Selamat Datang di Program Online Shop Sederhana")
-    print("===============================================")
-    print("Program ini merupakan program jual beli album lagu secara online")
-    
-    print("1. Genre")
-    print("2. Penyanyi")
-    print("3. Tahun")
-
-def Genre_Rock():
-        print("Genre musik rock adalah suatu genre musik populer yang mulai tumbuh sejak era 50an. Musik rock terbentuk karena pengaruh musik R&B dan country di era 40an.")
-        pass
 
 # Fungsi Display Item (Lagu)
 def display_products(products):
     print("==Produk Tersedia==:")
     print("-------------------")
     for _, product in products.iterrows():
-        print(f"{product['genre']}, {product['name']}, {product['year']}, {product['link']}: Rp{product['price']}")
+        print(f"{product['name']}: Rp{product['price']}")
 
 # Fungsi Menambahkan Lagu ke Dalam My List
 def add_to_cart(products, cart):
@@ -35,7 +20,7 @@ def add_to_cart(products, cart):
     # Mencari Item (Lagu) Dalam Display
     product = products[products['name'] == product_name]
     if not product.empty:
-        cart.append({'genre': product['genre'].values[0], 'name': product['name'].values[0], 'year': product['year'].values[0], 'link': product['link'].values[0], 'price': product['price'].values[0], 'quantity': quantity})
+        cart.append({'name': product['name'].values[0], 'price': product['price'].values[0], 'quantity': quantity})
         print(f"{quantity} {product_name} dimasukkan dalam My List.")
     else:
         print("Lagu Tidak Ditemukan.")
@@ -49,7 +34,7 @@ def display_cart(cart):
         print("My List:")
         print("--------------")
         for item in cart:
-            print(f"{item['genre']}, {item['name']}, {item['year']}, {item['link']}: Rp{item['price']} x {item['quantity']}")
+            print(f"{item['name']}: Rp{item['price']} x {item['quantity']}")
             total += item['price'] * item['quantity']
         print(f"Total: Rp{total}")
 
@@ -80,18 +65,10 @@ def import_products_from_csv(file_path):
 def clear_screen():
     os.system('cls' if os.name == 'nt' else clear)
 
-def pilihan_menu():
-        print("\nMenu:")
-        print("1. Masukkan Item ke My List")
-        print("2. Hapus Item dari My List")
-        print("3. Kosongkan My List")
-        print("4. Display My List")
-        print("5. Keluar dari Program")
-        print("6. Masuk ke menu pembayaran")
 # Main program
 def main():
     # Import Item pada CSV
-    products = import_products_from_csv('laguRock.csv')
+    products = import_products_from_csv('laguPop.csv')
 
     cart = []
 
@@ -121,25 +98,38 @@ def main():
         elif choice == '5':
             clear_screen()
             print("Terimakasih telah Menggunakan Program MyuList!")
+        elif choice == '6' :
+            clear_screen()
+            def buat_struk (nama_file, daftar_pembelian):
+                c  = canvas.Canvas(nama_file, pagesize=letter)
 
-menu_awal()
-pilihan_awal = input("Masukkan filter yang anda inginkan: ")    
-if pilihan_awal == "1":
-    def Genre():
-        print("Selamat Datang di Program Online Shop Sederhana")
-        print("===============================================")
-        print("Program ini merupakan program jual beli album lagu secara online")        
-        print("Pilihan genre lagu yang ditawarkan pada program ini berupa lagu Rock, Pop dan K-Pop.")
-        #menampilkan info genre lau
-        print("Informasi Genre Lagu")
-        print("1. Rock")
-        print("2. Pop")
-        print("3. K-Pop")
-        print("4. Keluar")
-    Genre()               
-    pilihan_genre = input("Masukkan genre lagu yang anda pilih: ")
+                c.setFont("Helvetica", 12)
+                c.drawString(100, 700, "Struk Pembayaran")
 
-    if pilihan_genre == "1":
-        Genre_Rock()
-        print(data_lagu)
-        main()
+                y = 650
+                total_harga = 0
+
+                for lagu in daftar_pembelian:
+                    nama_lagu = lagu['Nama Lagu']
+                    artis = lagu['Artis']
+                    harga = float(lagu['Harga'])
+
+                    c.drawString(100, y, f"{nama_lagu} - {artis} (${harga})")
+                    total_harga += harga
+                    y -= 20
+
+                c.drawString(100, y, "----------------------------------")
+                y -= 20
+                c.drawString(100, y, f"Total Harga: ${total_harga:.2f}")
+
+                c.save()
+                print("Terimakasih telah Menggunakan Program MyuList!")
+    # Menentukan path file CSV
+            file_csv = 'laguPop.csv'
+            break
+        else:
+            print("Input Tidak Valid. Silakan Coba Lagi.")
+
+# Run the program
+if __name__== "__main__":
+    main()

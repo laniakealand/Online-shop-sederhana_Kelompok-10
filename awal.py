@@ -3,7 +3,7 @@ from reportlab.pdfgen import canvas
 import pandas as pd
 import csv
 import os
-data_lagu = pd.read_csv('laguRock.csv')
+data_lagu = pd.read_csv('data_lagu.csv')
 
 
 def menu_awal():
@@ -20,11 +20,12 @@ def Genre_Rock():
         pass
 
 # Fungsi Display Item (Lagu)
+# Fungsi Display Item (Lagu)
 def display_products(products):
     print("==Produk Tersedia==:")
     print("-------------------")
     for _, product in products.iterrows():
-        print(f"{product['genre']}, {product['name']}, {product['year']}, {product['link']}: Rp{product['price']}")
+        print(f"{product['Genre']}, {product['Artis']}, {product['Judul']}, {product['Tahun']}, {product['Link']}: Rp{product['Harga']}")
 
 # Fungsi Menambahkan Lagu ke Dalam My List
 def add_to_cart(products, cart):
@@ -33,9 +34,9 @@ def add_to_cart(products, cart):
     quantity = int(input("Masukan Jumlah Item: "))
 
     # Mencari Item (Lagu) Dalam Display
-    product = products[products['name'] == product_name]
+    product = products[products['Artis'] and products[products['Judul']] == product_name]
     if not product.empty:
-        cart.append({'genre': product['genre'].values[0], 'name': product['name'].values[0], 'year': product['year'].values[0], 'link': product['link'].values[0], 'price': product['price'].values[0], 'quantity': quantity})
+        cart.append({'Genre': product['Genre'].values[0], 'Artis': product['Artis'].values[0],'Judul': product['Judul'].values[0], 'Tahun': product['Tahun'].values[0], 'Harga': product['Harga'].values[0], 'Link': product['Link'].values[0], 'quantity': quantity})
         print(f"{quantity} {product_name} dimasukkan dalam My List.")
     else:
         print("Lagu Tidak Ditemukan.")
@@ -49,8 +50,8 @@ def display_cart(cart):
         print("My List:")
         print("--------------")
         for item in cart:
-            print(f"{item['genre']}, {item['name']}, {item['year']}, {item['link']}: Rp{item['price']} x {item['quantity']}")
-            total += item['price'] * item['quantity']
+            print(f"{item['Genre']}, {item['Artis']}, {item['Judul']}, {item['Tahun']}, {item['Link']}: Rp{item['Harga']} x {item['quantity']}")
+            total += item['Harga'] * item['quantity']
         print(f"Total: Rp{total}")
 
 # Fungsi Menghapus Item Dalam My List
@@ -91,7 +92,7 @@ def pilihan_menu():
 # Main program
 def main():
     # Import Item pada CSV
-    products = import_products_from_csv('laguRock.csv')
+    products = import_products_from_csv('data_lagu.csv')
 
     cart = []
 
