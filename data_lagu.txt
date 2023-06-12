@@ -1,6 +1,6 @@
-Genre,Artis,Judul,Tahun,Harga,Link
-Rock,Green Day,Boulevard of Broken Dreams,2004,6000,https://youtu.be/Soa3gO7tL-c
-Rock,The White Stripes,Seven Nation Army,2003,6000,https://youtu.be/0J2QdDbelmY
+Genre,Lagu,Tahun,Harga,Link
+Rock,Green Day-Boulevard of Broken Dreams,2004,6000,https://youtu.be/Soa3gO7tL-c
+Rock,The White Stripes-Seven Nation Army,2003,6000,https://youtu.be/0J2QdDbelmY
 Rock,Foo Fighters,The Pretender,2007,6000,https://youtu.be/SBjQ9tuuTJQ
 Rock,Linkin Park,In the End,2000,6000,https://youtu.be/eVTXPUF4Oz4
 Rock,The Black Keys,Lonely Boy,2011,6000,https://youtu.be/a_426RiwST8
