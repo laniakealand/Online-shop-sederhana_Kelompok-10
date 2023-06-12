@@ -3,7 +3,8 @@ from reportlab.pdfgen import canvas
 import pandas as pd
 import csv
 import os
-data_lagu = pd.read_csv('laguRock.csv')
+data_lagu_rock = pd.read_csv('laguRock.csv')
+data_lagu_pop = pd.read_csv('data_kpop.csv')
 
 
 def menu_awal():
@@ -16,8 +17,12 @@ def menu_awal():
     print("3. Tahun")
 
 def Genre_Rock():
-        print("Genre musik rock adalah suatu genre musik populer yang mulai tumbuh sejak era 50an. Musik rock terbentuk karena pengaruh musik R&B dan country di era 40an.")
-        pass
+    print("Genre musik rock adalah suatu genre musik populer yang mulai tumbuh sejak era 50an. Musik rock terbentuk karena pengaruh musik R&B dan country di era 40an.")
+    pass
+
+def Genre_KPop():
+    print("Genre musik k-pop adalah genre musik populer yang berasal dari Korea Selatan. Lagu-lagu K-pop banyak dipengaruhi oleh berbagai genre musik, seperti hip-hop, electronic dance, jazz, dan rock.")
+    pass
 
 # Fungsi Display Item (Lagu)
 def display_products(products):
@@ -89,9 +94,42 @@ def pilihan_menu():
         print("5. Keluar dari Program")
         print("6. Masuk ke menu pembayaran")
 # Main program
-def main():
+def main_rock():
     # Import Item pada CSV
     products = import_products_from_csv('laguRock.csv')
+
+    cart = []
+
+    while True:
+        print("\nMenu:")
+        print("1. Masukkan Item ke My List")
+        print("2. Hapus Item dari My List")
+        print("3. Kosongkan My List")
+        print("4. Display My List")
+        print("5. Keluar dari Program")
+        print("6. Masuk ke menu pembayaran")
+
+        choice = input("Masukkan Pilihan Anda (1/2/3/4/5/6): ")
+
+        if choice == '1':
+            clear_screen()
+            add_to_cart(products, cart)
+        elif choice == '2':
+            clear_screen()
+            remove_from_cart(cart)
+        elif choice == '3':
+            clear_screen()
+            clear_cart(cart)
+        elif choice == '4':
+            clear_screen()
+            display_cart(cart)
+        elif choice == '5':
+            clear_screen()
+            print("Terimakasih telah Menggunakan Program MyuList!")
+        
+def main_kpop():
+    # Import Item pada CSV
+    products = import_products_from_csv('data_kpop.csv')
 
     cart = []
 
@@ -141,5 +179,9 @@ if pilihan_awal == "1":
 
     if pilihan_genre == "1":
         Genre_Rock()
-        print(data_lagu)
-        main()
+        print(data_lagu_rock)
+        main_rock()
+    elif pilihan_genre == "3":
+        Genre_KPop()
+        print(data_lagu_pop)
+        main_kpop()
