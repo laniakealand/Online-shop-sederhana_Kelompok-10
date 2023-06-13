@@ -249,7 +249,7 @@ def tahun():
         input("Tekan ENTER untuk lanjut \n")
     elif t == 3:
         print("Musik ini adalah musik pada era lebih dari 2021")
-        tabel_kpop()
+        tabel_2021()
         input("Tekan ENTER untuk lanjut \n")
     else:
         print("INPUT SALAH")
