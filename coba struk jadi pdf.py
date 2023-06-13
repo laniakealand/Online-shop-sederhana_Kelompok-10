@@ -1,8 +1,8 @@
-from reportlab.lib.pagesizes import letter
-from reportlab.pdfgen import canvas
+import pdfkit
 import pandas as pd
 import csv
 import os
+import random
 
 # Fungsi Display Item (Lagu)
 def display_products(products):
@@ -60,10 +60,111 @@ def clear_cart(cart):
 def import_products_from_csv(file_path):
     products = pd.read_csv(file_path)
     return products
-
 #clear screen
 def clear_screen():
     os.system('cls' if os.name == 'nt' else clear)
+    
+# Menu Opsi Pembayaran Merchandise
+def metodebayar():
+    print("Pilih Metode Pembayaran\n"
+              "[1] Gopay\n"
+              "[2] Bank Mandiri\n"
+              "[3] OVO\n")
+
+    # Pengguna memilih metode pembayaran
+    bayar = int(input('>>'))
+    if bayar == 1:
+        print('silahkan lakukan pembayaran ke akun gopay kami')
+        print('081563184352 A.N. Raka')
+        print('lalu diikuti dengan 5 digit kode pembayaran')
+        print('contoh 081563184352-55555')
+        struk()
+    elif bayar == 2:
+        print('silahkan lakukan pembayaran ke rekening mandiri kami')
+        print('720839214 A.N. Hasan')
+        print('lalu diikuti dengan 5 digit kode pembayaran')
+        print('contoh 720839214-55555')
+        struk()
+    else:
+        print('silahkan lakukan pembayaran ke rekening mandiri kami')
+        print('081567878985 A.N. Narista')
+        print('lalu diikuti dengan 5 digit kode pembayaran')
+        print('contoh 081567878985-55555')
+        struk()
+
+#Total Pembelian:
+total = 0
+def lunas(cart):
+    for item in cart:
+        print(f"{item['name']}: Rp{item['price']} x {item['quantity']}")
+        total += item['price'] * item['quantity']
+    print(f"Total: Rp{total}")
+def bayarr(lunas) :
+    
+# Input Data User
+def datapengguna():
+    global nama
+    global phone
+    global rumah
+    
+
+    print('                 DATA USER                ')
+    nama = input('Masukkan Nama Anda               : ')
+    for name in nama:
+        if name.isdigit():
+            print("Tolong Masukan Dengan Huruf")
+            datapengguna()
+    phone = input('Masukkan No HP Anda             :+62 ')
+    rumah = input('Masukkan Alamat Anda            : ')
+    print()
+    print('=========================================')
+    print()
+datapengguna()
+def struk():
+    # kode pelunasan
+    kode = random.randrange(55555, 77777, 10)
+    print("Kode Pembayaran anda adalah", kode)
+    print("Silahkan membayar ke No. Akun tersebut")
+    print()
+    while True:
+        bayar = int(input("Masukan Kode Pelunasan: "))
+        if bayar == kode:
+            print("Pembayaran", bayar, "Berhasil. \n Hubungi Admin Jika Ada Kendala")
+            break
+        else:
+            print("Maaf, Kode yang Dimasukkan Salah")
+
+    # Menampilkan struk
+    print()
+    print('--------------DATA PENERIMA BARANG------------')
+    nama = input('Masukkan Nama Lengkap                : ')
+    phone = input('Masukkan No HP Anda                 : +62 ')
+
+    # Template Struk
+    output = f'''
+    <html>
+    <head>
+        <style>
+            /* Add styling to the output */
+            /* ... */
+
+        </style>
+    </head>
+    <body>
+        <h2>MYULIST RECAP</h2>
+        <p>Nama                : {nama}</p>
+        <p>Nomor HP            : {phone}</p>
+        <p>Alamat              : {rumah}</p>
+        <p>Kode Pembayaran     : {bayar}</p>
+        <p>Total Pembelian     : {total}</p>
+        <p>Terimakasih pesanan akan dikirim</p>
+        <p>Apabila belum terkirim silakan hubungi Admin.</p>
+    </body>
+    </html>
+    '''
+
+    # Generate PDF from the HTML output
+    pdfkit.from_string(output, 'struk.pdf')
 
 # Main program
 def main():
@@ -79,9 +180,8 @@ def main():
         print("3. Kosongkan My List")
         print("4. Display My List")
         print("5. Keluar dari Program")
-        print("6. Masuk ke menu pembayaran")
 
-        choice = input("Masukkan Pilihan Anda (1/2/3/4/5/6): ")
+        choice = input("Masukkan Pilihan Anda (1/2/3/4/5): ")
 
         if choice == '1':
             clear_screen()
@@ -95,41 +195,19 @@ def main():
         elif choice == '4':
             clear_screen()
             display_cart(cart)
+            lunas = input('Apakah Anda Ingin Melakukan Pembayaran? (Y/N) ')
+            if lunas == "Y" or "y":
+                total(cart)
+                struk()
+            else:
+                main()
         elif choice == '5':
             clear_screen()
             print("Terimakasih telah Menggunakan Program MyuList!")
-        elif choice == '6' :
-            clear_screen()
-            def buat_struk (nama_file, daftar_pembelian):
-                c  = canvas.Canvas(nama_file, pagesize=letter)
-
-                c.setFont("Helvetica", 12)
-                c.drawString(100, 700, "Struk Pembayaran")
-
-                y = 650
-                total_harga = 0
-
-                for lagu in daftar_pembelian:
-                    nama_lagu = lagu['Nama Lagu']
-                    artis = lagu['Artis']
-                    harga = float(lagu['Harga'])
-
-                    c.drawString(100, y, f"{nama_lagu} - {artis} (${harga})")
-                    total_harga += harga
-                    y -= 20
-
-                c.drawString(100, y, "----------------------------------")
-                y -= 20
-                c.drawString(100, y, f"Total Harga: ${total_harga:.2f}")
-
-                c.save()
-                print("Terimakasih telah Menggunakan Program MyuList!")
-    # Menentukan path file CSV
-            file_csv = 'laguPop.csv'
             break
         else:
             print("Input Tidak Valid. Silakan Coba Lagi.")
 
 # Run the program
-if __name__== "__main__":
+if __name__ == "__main__":
     main()

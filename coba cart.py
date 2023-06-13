@@ -2,6 +2,7 @@ import pandas as pd
 import csv
 import os
 import random
+import pdfkit
 
 # Fungsi Display Item (Lagu)
 def display_products(products):
@@ -65,31 +66,33 @@ def metodebayar():
     print("Pilih Metode Pembayaran\n"
               "[1] Gopay\n"
               "[2] Bank Mandiri\n"
-              "[3] OVO\n")
+              "[3] Bank BNI\n")
 
     # Pengguna memilih metode pembayaran
     bayar = int(input('>>'))
     if bayar == 1:
         print('silahkan lakukan pembayaran ke akun gopay kami')
-        print('081563184352 A.N. Raka')
+        print('081234567 A.N. Gabeta')
         print('lalu diikuti dengan 5 digit kode pembayaran')
-        print('contoh 081563184352-55555')
+        print('contoh 081234567-55555')
         struk()
     elif bayar == 2:
         print('silahkan lakukan pembayaran ke rekening mandiri kami')
-        print('720839214 A.N. Hasan')
+        print('123456789 A.N. Kasturia')
         print('lalu diikuti dengan 5 digit kode pembayaran')
-        print('contoh 720839214-55555')
+        print('contoh 123456789-55555')
         struk()
     else:
-        print('silahkan lakukan pembayaran ke rekening mandiri kami')
-        print('081567878985 A.N. Narista')
+        print('silahkan lakukan pembayaran ke rekening BNI kami')
+        print('123456789 A.N. Katon')
         print('lalu diikuti dengan 5 digit kode pembayaran')
-        print('contoh 081567878985-55555')
+        print('contoh 123456789-55555')
         struk()
 
 #Total Pembelian:
 def total(cart):
+        global total
+
         total = 0
         print("My List:")
         print("--------------")
@@ -97,7 +100,7 @@ def total(cart):
             print(f"{item['name']}: Rp{item['price']} x {item['quantity']}")
             total += item['price'] * item['quantity']
         print(f"Total: Rp{total}")
-
+ 
 # Input Data User
 def datapengguna():
     global nama
@@ -132,30 +135,31 @@ def struk():
         else:
             print("Maaf, Kode yang Dimasukkan Salah")
 
-    # Menampilkan struk
-    print()
-    print('--------------DATA PENERIMA BARANG------------')
-    nama = input('Masukkan Nama Lengkap                : ')
-    phone = input('Masukkan No HP Anda                 : +62 ')
-
     # Template Struk
-    print()
-    print('==============================================================')
-    print("                      MYULIST RECAP                           ")
-    print('==============================================================')
-    print()
-    print(" Nama                :", nama)
-    print(" Nomor HP            :", phone)
-    print(" Alamat              :", rumah)
-    print(" Kode Pembayaran     :", bayar)
-    print(" Total Pembelian     :", total)
-    print("==============================================================")
-    print("                        THANK YOU :D                          ")
-    print("==============================================================")
-    print("Terimakasih pesanan akan dikirim\n"
-          "Apabila belum terkirim silakan hubungi Admin.")
-    main()
+    output = f'''
+    <html>
+    <head> 
+        <style>
+            /* Add styling to the output */
+            /* ... */
 
+        </style>
+    </head>
+    <body>
+        <h2>MYULIST RECAP</h2>
+        <p>Nama                : {nama}</p>
+        <p>Nomor HP            : {phone}</p>
+        <p>Alamat              : {rumah}</p>
+        <p>Kode Pembayaran     : {bayar}</p>
+        <p>Total Pembelian     : {total}</p>
+        <p>Terimakasih pesanan akan dikirim</p>
+        <p>Apabila belum terkirim silakan hubungi Admin.</p>
+    </body>
+    </html>
+    '''
+
+    # Generate PDF from the HTML output
+    pdfkit.from_string(output, 'struk.pdf')
 #clear screen
 def clear_screen():
     os.system('cls' if os.name == 'nt' else clear)
@@ -192,7 +196,6 @@ def main():
             lunas = input('Apakah Anda Ingin Melakukan Pembayaran? (Y/N) ')
             if lunas == "Y" or "y":
                 total(cart)
-                datapengguna()
                 metodebayar()
                 struk()
             else:
