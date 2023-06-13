@@ -9,6 +9,9 @@ import os
 #data_lagu_pop = pd.read_csv('data_pop.csv')
 #data_lagu_kpop = pd.read_csv('data_kpop.csv')
 #data_lagu_semua = pd.read_csv('data_semua.csv')
+#data_lagu_boyband = pd.read_csv('data_boyband.csv')
+#data_lagu_girlband = pd.read_csv('data_girlband.csv')
+#data_lagu_band = pd.read_csv('data_band.csv')
 
 #TABEL ROCK
 def tabel_rock():
@@ -108,7 +111,7 @@ def tabel_band():
         reader = csv.reader(file)
           # Membaca baris header (kolom)
         for row in reader:
-            data_band.append(row)
+            data_tabel_band.append(row)
     print('')
     print('TABEL'.center(113))
     print('DATA LAGU BAND'.center(113))
@@ -276,8 +279,6 @@ def menu_awal():
         pass
     else:
         menu_awal()
-
- 
 
 # Menjalankan program
 menu_awal()
