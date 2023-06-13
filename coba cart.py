@@ -91,6 +91,8 @@ def metodebayar():
 
 #Total Pembelian:
 def total(cart):
+        global total
+
         total = 0
         print("My List:")
         print("--------------")
@@ -98,7 +100,7 @@ def total(cart):
             print(f"{item['name']}: Rp{item['price']} x {item['quantity']}")
             total += item['price'] * item['quantity']
         print(f"Total: Rp{total}")
-
+ 
 # Input Data User
 def datapengguna():
     global nama
