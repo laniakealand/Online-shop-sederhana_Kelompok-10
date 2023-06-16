@@ -1,9 +1,6 @@
 import pandas as pd
 import csv
-import os
 import random
-
-
 
 # Define the shopping cart as a global variable
 cart = []
@@ -18,7 +15,6 @@ data_lagu_band = pd.read_csv('data_band.csv')
 data_lagu_2000_2010 = pd.read_csv('data_2000-2010.csv')
 data_lagu_2011_2020 = pd.read_csv('data_2011-2020.csv')
 data_lagu_2021_2023 = pd.read_csv('data_2021_keatas.csv')
-
 
 #TABEL ROCK
 def tabel_rock():
@@ -290,15 +286,17 @@ def genre():
     try:
         g = int(input("Masukkan pilihan anda: "))
         if g == 1:
-            print("Genre musik rock adalah suatu genre musik populer yang mulai tumbuh sejak era 50an. Musik rock terbentuk karena pengaruh musik R&B dan country di era 40an.")
+            print("Genre musik rock adalah suatu genre musik populer yang mulai") 
+            print("tumbuh sejak era 50an. Musik rock terbentuk karena pengaruh musik R&B dan country di era 40an.")  
             tabel_rock()
             add_to_cart(data_lagu_rock)
         elif g == 2:
-            print("Genre musik pop adalah salah satu genre musik yang terkenal. Bahkan genre musik pop bisa dibilang sebagai aliran musik paling populer dan paling banyak dinyanyikan oleh penyanyi dan band di seluruh dunia.")
-            tabel_pop()
+            print("Genre musik pop adalah salah satu genre musik yang terkenal. Bahkan genre musik pop bisa")
+            print("dibilang sebagai aliran musik paling populer dan paling banyak dinyanyikan oleh penyanyi dan band di seluruh dunia.") 
             add_to_cart(data_lagu_pop)
         elif g == 3:
-            print("Genre musik k-pop adalah genre musik populer yang berasal dari Korea Selatan. Lagu-lagu K-pop banyak dipengaruhi oleh berbagai genre musik, seperti hip-hop, electronic dance, jazz, dan rock.")
+            print("Genre musik k-pop adalah genre musik populer yang berasal dari Korea Selatan.")
+            print("Lagu-lagu K-pop banyak dipengaruhi oleh berbagai genre musik, seperti hip-hop, electronic dance, jazz, dan rock.")   
             tabel_kpop()
             add_to_cart(data_lagu_kpop)
         elif g == 4:
@@ -321,15 +319,18 @@ def penyanyi():
     p = int(input("Masukkan pilihan anda: "))
     # Looping
     if p == 1:
-        print("Boy band adalah sejenis kelompok musik pop atau R&B yang terdiri dari tiga anggota atau lebih, semuanya penyanyi laki-laki muda.")
+        print("Boy band adalah sejenis kelompok musik pop atau R&B yang terdiri dari tiga anggota atau lebih,")
+        print("semuanya penyanyi laki-laki muda.")     
         tabel_boyband()
         add_to_cart(data_lagu_boyband)
     elif p == 2:
-        print("Girl bandGrup vokal wanita adalah kelompok musik populer yang terdiri atas beberapa penyanyi wanita muda yang biasanya melakukan penampilan musik yang selaras.  ")
+        print("Girl bandGrup vokal wanita adalah kelompok musik populer yang terdiri atas")
+        print("beberapa penyanyi wanita muda yang biasanya melakukan penampilan musik yang selaras.")
         tabel_girlband()
         add_to_cart(data_lagu_girlband)
     elif p == 3:
-        print("Band atau ansambel musik merupakan kumpulan yang terdiri atas dua atau lebih musisi yang memainkan alat musik ataupun bernyanyi. ")
+        print("Band atau ansambel musik merupakan kumpulan yang terdiri atas dua atau lebih musisi")
+        print("yang memainkan alat musik ataupun bernyanyi.")
         tabel_band()
         add_to_cart(data_lagu_band)
     elif p == 4:
@@ -435,7 +436,6 @@ def checkout():
         input("Tekan ENTER untuk lanjut \n")
         datapengguna()
         strukbeli()
-        ongkir()
         metodebayar()
         # Reset the cart
         cart.clear()
@@ -477,14 +477,14 @@ def datapengguna():
     
     
     print('                 DATA USER                ')
-    nama = input('Masukkan Nama Anda               : ')
+    nama = input('Masukkan Nama Anda                    : ')
     for name in nama:
         if name.isdigit():
             print("Tolong Masukan Dengan Huruf")
             datapengguna()
-    phone = int(input('Masukkan No HP Anda             :+62 '))
-    rumah = input('Masukkan Alamat Anda            : ')
-    kota  = str(input('Masukkan Kota Anda              : '))
+    phone = int(input('Masukkan No HP Anda              :+62 '))
+    rumah = input('Masukkan Alamat Anda                 : ')
+    kota  = str(input('Masukkan Kota Anda               : '))
     print()
     print('=========================================')
     print()
@@ -504,6 +504,37 @@ def struk():
             break
         else:
             print("Maaf, Kode Pelunasan Salah!")
+
+#Ongkos Kirim
+# Kota Jogja
+ongkir_jgj = 5000  
+# Kota Semaarang
+ongkir_smg = 7000
+# Kota Surabaya
+ongkir_sby = 9000
+# Kota Malang 
+ongkir_mlg = 11000
+# Kota Salatiga
+ongkir_slt = 6000
+# alamat ongkir
+def ongkir():
+    global pay
+    print('Barang anda akan diantarkan jika anda berada pada kota jangkauan')
+    kota = input("Kota (Jogja/Semarang/Surabaya/Malang/Salatiga): ")
+    if kota == "Jogja":
+        pay = ongkir_jgj + total_price
+    elif kota == "Semarang":
+        pay = ongkir_smg + total_price
+    elif kota == "Surabaya":
+        pay = ongkir_slt + total_price
+    elif kota == "Malang":
+        pay = ongkir_mlg + total_price
+    elif kota == "Salatiga":
+        pay = ongkir_slt + total_price
+    else :
+        print("Kota yang dicantumkan tidak terdeteksi")
+        return None
+    print("Total yang harus dibayarkan: Rp {}".format(pay))
 
 # Struk Pelunasan Merchendise
 def strukbeli():
@@ -546,39 +577,6 @@ def strukbeli():
     print()
     print("Terimakasih pesanan akan dikirim\n"
           "Apabila belum terkirim dapat hubungi admin.")
-    menu_awal()
-
-#Ongkos Kirim
-# Kota Jogja
-ongkir_jgj = 5000  
-# Kota Semaarang
-ongkir_smg = 7000
-# Kota Surabaya
-ongkir_sby = 9000
-# Kota Malang 
-ongkir_mlg = 11000
-# Kota Salatiga
-ongkir_slt = 6000
-# alamat ongkir
-def ongkir():
-    global pay
-    print('Barang anda akan diantarkan jika anda berada pada kota jangkauan')
-    kota = input("Kota (Jogja/Semarang/Surabaya/Malang/Salatiga): ")
-    if kota == "Jogja":
-        pay = ongkir_jgj + total_price
-    elif kota == "Semarang":
-        pay = ongkir_smg + total_price
-    elif kota == "Surabaya":
-        pay = ongkir_slt + total_price
-    elif kota == "Malang":
-        pay = ongkir_mlg + total_price
-    elif kota == "Salatiga":
-        pay = ongkir_slt + total_price
-    else :
-        print("Kota yang dicantumkan tidak terdeteksi")
-        return None
-    
-    print("Total yang harus dibayarkan: Rp {}".format(pay))
 
 # Menu Metode Bayar
 def metodebayar():
