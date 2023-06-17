@@ -2,10 +2,12 @@ import pandas as pd
 import csv
 import random
 
-# Define the shopping cart as a global variable
+
+
+# Mendefisinikan cart sebagai variabel global
 cart = []
 
-# Load song data from CSV files
+# Memuat data lagu dari fiile CSV
 data_lagu_rock = pd.read_csv('data_rock.csv')
 data_lagu_pop = pd.read_csv('data_pop.csv')
 data_lagu_kpop = pd.read_csv('data_kpop.csv')
@@ -15,6 +17,7 @@ data_lagu_band = pd.read_csv('data_band.csv')
 data_lagu_2000_2010 = pd.read_csv('data_2000-2010.csv')
 data_lagu_2011_2020 = pd.read_csv('data_2011-2020.csv')
 data_lagu_2021_2023 = pd.read_csv('data_2021_keatas.csv')
+
 
 #TABEL ROCK
 def tabel_rock():
@@ -240,10 +243,11 @@ def tabel_lagu2011():
         print(f'| {i:^4} | {data_lagu_2011_2020[i][0]:^8} | {data_lagu_2011_2020[i][1]:^45} | {data_lagu_2011_2020[i][2]:^8} | {data_lagu_2011_2020[i][3]:^8} | {data_lagu_2011_2020[i][4]:^28} |'.center(113))
         print(('-'*113).center(113))
 
+
 #TABEL LAGU DIATAS 2021
 def tabel_lagu2021():
     data_lagu_2021_2023 = []
-    with open('data_2021_keatas.csv', 'r') as file:
+    with open('data_2021-keatas.csv', 'r') as file:
         reader = csv.reader(file)
         # Membaca baris header (kolom)
         header = next(reader)
@@ -285,18 +289,15 @@ def genre():
     try:
         g = int(input("Masukkan pilihan anda: "))
         if g == 1:
-            print("Genre musik rock adalah suatu genre musik populer yang mulai") 
-            print("tumbuh sejak era 50an. Musik rock terbentuk karena pengaruh musik R&B dan country di era 40an.")  
+            print("Genre musik rock adalah suatu genre musik populer yang mulai tumbuh sejak era 50an. Musik rock terbentuk karena pengaruh musik R&B dan country di era 40an.")
             tabel_rock()
             add_to_cart(data_lagu_rock)
         elif g == 2:
-            print("Genre musik pop adalah salah satu genre musik yang terkenal. Bahkan genre musik pop bisa")
-            print("dibilang sebagai aliran musik paling populer dan paling banyak dinyanyikan oleh penyanyi dan band di seluruh dunia.")
+            print("Genre musik pop adalah salah satu genre musik yang terkenal. Bahkan genre musik pop bisa dibilang sebagai aliran musik paling populer dan paling banyak dinyanyikan oleh penyanyi dan band di seluruh dunia.")
             tabel_pop()
             add_to_cart(data_lagu_pop)
         elif g == 3:
-            print("Genre musik k-pop adalah genre musik populer yang berasal dari Korea Selatan.")
-            print("Lagu-lagu K-pop banyak dipengaruhi oleh berbagai genre musik, seperti hip-hop, electronic dance, jazz, dan rock.")   
+            print("Genre musik k-pop adalah genre musik populer yang berasal dari Korea Selatan. Lagu-lagu K-pop banyak dipengaruhi oleh berbagai genre musik, seperti hip-hop, electronic dance, jazz, dan rock.")
             tabel_kpop()
             add_to_cart(data_lagu_kpop)
         elif g == 4:
@@ -308,7 +309,7 @@ def genre():
     except ValueError as v:
         print("Terjadi kesalahan: ", v)
         genre()
-
+        
 # Fungsi Penyanyi
 def penyanyi(): 
     print("1. Boyband")
@@ -317,30 +318,24 @@ def penyanyi():
     print("4. Keluar")
 
     p = int(input("Masukkan pilihan anda: "))
-    try:
-        if p == 1:
-            print("Boy band adalah sejenis kelompok musik pop atau R&B yang terdiri dari tiga anggota atau lebih,")
-            print("semuanya penyanyi laki-laki muda.") 
-            tabel_boyband()
-            add_to_cart(data_lagu_boyband)
-        elif p == 2:
-            print("Girl bandGrup vokal wanita adalah kelompok musik populer yang terdiri atas")
-            print("beberapa penyanyi wanita muda yang biasanya melakukan penampilan musik yang selaras.")
-            tabel_girlband()
-            add_to_cart(data_lagu_girlband)
-        elif p == 3:
-            print("Band atau ansambel musik merupakan kumpulan yang terdiri atas dua atau lebih musisi")
-            print("yang memainkan alat musik ataupun bernyanyi.")
-            tabel_band()
-            add_to_cart(data_lagu_band)
-        elif p == 4:
-            print("\nTERIMA KASIH TELAH MENGGUNAKAN PROGRAM INI\n")
-            pass
-        else:
-            print("INPUT SALAH")
-            penyanyi()
-    except ValueError as v:
-        print("Terjadi kesalahan: ", v)
+    # Looping
+    if p == 1:
+        print("Musik ini adalah musik yang dibawakan oleh grup para pria")
+        tabel_boyband()
+        add_to_cart(data_lagu_boyband)
+    elif p == 2:
+        print("Musik ini adalah musik yang dibawakan oleh grup para wanita")
+        tabel_girlband()
+        add_to_cart(data_lagu_girlband)
+    elif p == 3:
+        print("Musik ini adalah musik yang dibawakan menggunakan berbagai alat musik")
+        tabel_band()
+        add_to_cart(data_lagu_band)
+    elif p == 4:
+        print("\nTERIMA KASIH TELAH MENGGUNAKAN PROGRAM INI\n")
+        pass
+    else:
+        print("INPUT SALAH")
         penyanyi()
 
 # Fungsi Tahun
@@ -351,27 +346,24 @@ def tahun():
     print("4. Keluar")
 
     t = int(input("Masukkan pilihan anda: "))
-    try:
-        if t == 1:
-            print("Musik ini adalah musik pada era 2000-2010")
-            tabel_lagu2000()
-            add_to_cart(data_lagu_2000_2010)
-        elif t == 2:
-            print("Musik ini adalah musik pada era 2011-2020")
-            tabel_lagu2011()
-            add_to_cart(data_lagu_2011_2020)
-        elif t == 3:
-            print("Musik ini adalah musik pada era lebih dari 2021")
-            tabel_lagu2021()
-            add_to_cart(data_lagu_2021_2023)
-        elif t == 4:
-            print("\nTERIMA KASIH TELAH MENGGUNAKAN PROGRAM INI\n")
-            pass
-        else:
-            print("INPUT SALAH")
-            tahun()
-    except ValueError as v:
-        print("Terjadi kesalahan: ", v)
+    # Looping
+    if t == 1:
+        print("Musik ini adalah musik pada era 2000-2010")
+        tabel_lagu2000()
+        add_to_cart(data_lagu_2000_2010)
+    elif t == 2:
+        print("Musik ini adalah musik pada era 2011-2020")
+        tabel_lagu2011()
+        add_to_cart(data_lagu_2011_2020)
+    elif t == 3:
+        print("Musik ini adalah musik pada era lebih dari 2021")
+        tabel_lagu2021()
+        add_to_cart(data_lagu_2021_2023)
+    elif t == 4:
+        print("\nTERIMA KASIH TELAH MENGGUNAKAN PROGRAM INI\n")
+        pass
+    else:
+        print("INPUT SALAH")
         tahun()
 
 # Fungsi untuk menambahkan lagu ke keranjang
@@ -430,7 +422,7 @@ def checkout():
         else:
             print("Input yang anda masukkan salah")
             checkout()
-
+        
     else:
         print("")
         print("=======MY LIST=======")
@@ -440,14 +432,15 @@ def checkout():
             print(f"{song['name']}: Rp{song['price']}")
         print(f"Total Harga: Rp{total_price}")
         input("Tekan ENTER untuk lanjut \n")
-        datapengguna()
-        ongkir()
-        metodebayar()
+        data_pengguna()
+        struk_beli()
+        total_pembayaran()
+        metode_bayar()
         # Reset the cart
         cart.clear()
 
 #Menu Pembelian
-def kembali_pembelian():
+def membeli_kembali():
     pilihan_kembali = str(input("Apakah anda ingin membeli lagi? (y/n): "))
     while True:
                 if pilihan_kembali == "y":
@@ -470,43 +463,33 @@ def kembali_pembelian():
                         break
                     else:
                         print("INPUT SALAH")
-                        kembali_pembelian()
+                        membeli_kembali()
                 else:
-                    kembali_pembelian()
+                    membeli_kembali()
 
-# Input Data User dan Penerima
-def datapengguna():
+# Input Data User
+def data_pengguna():
     global nama
-    global nama_penerima
     global phone
-    global phone_penerima
     global rumah
-    global alamat_penerima
     global kota
     
-    #Mengisi data User
-    print('----------DATA USER----------')
-    nama = input('Masukkan Nama Anda                    : ')
+    
+    print('                 DATA USER                ')
+    nama = input('Masukkan Nama Anda               : ')
     for name in nama:
         if name.isdigit():
             print("Tolong Masukan Dengan Huruf")
-            datapengguna()
-    phone = int(input('Masukkan No HP Anda              :+62 '))
-    rumah = input('Masukkan Alamat Anda                  : ')
-    kota  = str(input('Masukkan Kota Anda               : '))
+            data_pengguna()
+    phone = int(input('Masukkan No HP Anda             :+62 '))
+    rumah = input('Masukkan Alamat Anda            : ')
+    kota  = str(input('Masukkan Kota Anda              : '))
     print()
     print('=========================================')
     print()
-
-    # Mengisi data penerima
-    print()
-    print('----------DATA PENERIMA BARANG----------')
-    nama_penerima = str(input('Masukkan nama penerima           : '))
-    phone_penerima = int(input('Masukkan no HP penerima          : +62 '))
-    alamat_penerima = input('Masukkan alamat penerima       : ')
                         
 #Struk
-def struk():
+def kode_pelunasan():
     # kode pelunasan
     lunas = random.randrange(55555, 77777, 10)
     print("Kode Pembayaran anda adalah", lunas)
@@ -514,12 +497,44 @@ def struk():
     print()
 
     while True:
-        bayarr = int(input("Masukan Kode Pelunasan: "))
-        if bayarr == lunas:
-            print("Pembayaran Dengan No Akun", bayarr, "Berhasil. \n Hubungi Admin Jika Ada Kendala")
-            break
-        else:
-            print("Maaf, Kode Pelunasan Salah!")
+        try:
+            bayarr = int(input("Masukan Kode Pelunasan: "))
+            if bayarr == lunas:
+                print("Pembayaran Dengan No Akun", bayarr, "Berhasil. \n Hubungi Admin Jika Ada Kendala")
+                break
+            else:
+                print("Maaf kode pelunasan yang anda masukkan salah. Silahkan coba lagi.")
+                kode_pelunasan()
+        except ValueError as v:
+            print("Terjadi kesalahan: ", v)
+            kode_pelunasan()
+
+# Struk Pelunasan
+def struk_beli():
+    # kode pelunasan
+    print()
+    lunas = random.randrange(55555, 77777, 10)
+    print("Kode Pembayaran anda adalah", lunas)
+    print("Silahkan membayar ke No. Akun tersebut")
+    while True:
+        try:
+            print()
+            bayarr = int(input("Masukan Kode Pelunasan: "))
+            if bayarr == lunas:
+                print("Pembayaran Dengan No Akun", bayarr, "Berhasil. \n Hubungi Admin Jika Ada Kendala")
+                break
+            else:
+                print("Maaf, Kode Pelunasan Salah!")
+        except ValueError as v:
+            print("Terjadi kesalahan: ", v)
+            kode_pelunasan()
+
+    # Menampilkan struk
+    print()
+    print('----------MENGISI DATA PENERIMA BARANG----------')
+    nama_penerima = str(input('Masukkan nama penerima           : '))
+    nohp_penerima = int(input('Masukkan no HP penerima          : +62 '))
+    alamat_penerima = str(input('Masukkan alamat penerima       : '))
 
     # Template Struk
     print()
@@ -527,36 +542,20 @@ def struk():
     print("                      STRUK PEMBELIAN")
     print('==============================================================')
     print()
-    print(" Nama                : ", nama)
-    print(" Nomor HP            :  +62",phone)
-    print(" Alamat              : ", rumah, ",", kota)
-    print(" Kode Pembayaran     : ", bayarr)
-    print(" Nominal Bayar       :  Rp.", pay)
-    print("==============================================================")
-    print("                        TERIMA KASIH                          ")
-    print("==============================================================")
-    print()
-    pass
-
-    # Template Struk Penerima
-    print()
-    print('==============================================================')
-    print("                      RESI PENERIMA BARANG")
-    print('==============================================================')
-    print()
     print(" Nama                : ", nama_penerima)
-    print(" Nomor HP            :  +62",phone_penerima)
+    print(" Nomor HP            :  +62", nohp_penerima)
     print(" Alamat              : ", alamat_penerima)
     print(" Kode Pembayaran     : ", bayarr)
-    print(" Nominal Bayar       :  Rp.", pay)
+    print(                          total_pembayaran())
     print("==============================================================")
     print("                        TERIMA KASIH                          ")
     print("==============================================================")
     print()
     print("Terimakasih pesanan akan dikirim\n"
           "Apabila belum terkirim dapat hubungi admin.")
+    menu_awal()
 
-#Ongkos Kirim
+#Biaya Pengiriman
 # Kota Jogja
 ongkir_jgj = 5000  
 # Kota Semaarang
@@ -568,7 +567,7 @@ ongkir_mlg = 11000
 # Kota Salatiga
 ongkir_slt = 6000
 # alamat ongkir
-def ongkir():
+def total_pembayaran():
     global pay
     print('Barang anda akan diantarkan jika anda berada pada kota jangkauan')
     try:
@@ -590,13 +589,15 @@ def ongkir():
             print("Total yang harus dibayarkan: Rp {}".format(pay))
         else:
             print("Kota yang dicantumkan tidak terdeteksi.")
-            ongkir()
+            total_pembayaran()
     except ValueError as v:
         print("Terjadi kesalahan: ", v)
-        ongkir()
+        total_pembayaran()
+        
+    
 
 # Menu Metode Bayar
-def metodebayar():
+def metode_bayar():
     global bayar
     print("Pilih Metode Pembayaran\n"
               "[1] Gopay\n"
@@ -612,31 +613,33 @@ def metodebayar():
             print('081563184352 A.N. Gabeta')
             print('lalu diikuti dengan 5 digit kode pembayaran')
             print('contoh 081563184352-55555')
-            struk()
+            kode_pelunasan()
         elif bayar == 2:
             print('silahkan lakukan pembayaran ke rekening mandiri kami')
             print('720839214 A.N. Kasturia')
             print('lalu diikuti dengan 5 digit kode pembayaran')
             print('contoh 720839214-55555')
-            struk()
+            kode_pelunasan()
         elif bayar == 3:
             print('silahkan lakukan pembayaran ke rekening BNI kami')
             print('081567878985 A.N. Katon')
             print('lalu diikuti dengan 5 digit kode pembayaran')
             print('contoh 081567878985-55555')
-            struk()
+            kode_pelunasan()
         else:
             print("Maaf input yang anda masukkan salah")
-            metodebayar()
+            metode_bayar()
     except ValueError as v:
         print("Terjadi kesalahan: ", v)
-        metodebayar()
+        metode_bayar()
+        
+        
 
 # Fungsi Menu Awal
 def menu_awal():
     print("Selamat Datang di Program Myulist".center(115))
     print("===============================================".center(115))
-    print("Program ini merupakan program jual beli album lagu secara online".center(115))
+    print("Program ini merupakan program jual beli CD lagu secara online".center(115))
     
     print("1. Genre")
     print("2. Penyanyi")
@@ -647,13 +650,13 @@ def menu_awal():
         pilihan = int(input("Masukkan pilihan anda: "))
         if pilihan == 1:
             genre()
-            kembali_pembelian()
+            membeli_kembali()
         elif pilihan == 2:
             penyanyi()
-            kembali_pembelian()
+            membeli_kembali()
         elif pilihan == 3:
             tahun()
-            kembali_pembelian()
+            membeli_kembali()
         elif pilihan == 4:
             print("\nTERIMA KASIH TELAH MENGGUNAKAN PROGRAM INI\n")
             pass
